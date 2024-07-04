@@ -14,13 +14,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Feedback {
+public class FeedbackRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
-    private String message;
+
+    private String comment;
     private String rating;
+    private String email;
 
 }
