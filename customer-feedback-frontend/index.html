@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Feedback</title>
+    <style>
+        .pad-class {
+            padding: 10px;
+        }
+        .feedback-form {
+            width: 50%;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .mood-group {
+            margin-top: 15px;
+        }
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2 class="pad-class">Customer Feedback Comments</h2>
+    <div id="feedback-warning" class="pad-class" style="display: none;">Enter valid values</div>
+    <form id="feedbackForm" class="feedback-form">
+        <div class="form-group">
+            <textarea id="msg" name="msg" rows="10" cols="72" placeholder="Great service! Would recommend again."></textarea>
+        </div>
+
+        <br />
+        <div class="mood-group">
+            <fieldset class="mood-fieldset">
+                <label>Satisfaction Rating:</label> <br/><br />
+                
+                <input class="form-check-input" type="radio" name="mood" value="Very unhappy" required />
+                <label class="form-check-label" for="happy">Very unhappy</label>
+                <br />
+                
+                <input class="form-check-input" type="radio" name="mood" value="Moderately unhappy" />
+                <label class="form-check-label" for="veryHappy">Moderately unhappy</label>
+                <br />
+                
+                <input class="form-check-input" type="radio" name="mood" value="Neutral" />
+                <label class="form-check-label" for="veryHappy">Neutral</label>
+                <br />
+                
+                <input class="form-check-input" type="radio" name="mood" value="Moderately Happy" />
+                <label class="form-check-label" for="veryHappy">Moderately Happy</label>
+                <br />
+                
+                <input class="form-check-input" type="radio" name="mood" value="Very Happy" />
+                <label class="form-check-label" for="veryHappy">Very Happy</label>
+                <br />
+            </fieldset>
+        </div>
+        <div class="form-group">
+            <label for="email">Customer Email Address </label>
+            <br>
+            <textarea id="email" name="email" rows="1" cols="72" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required></textarea>
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-success" onclick="save()">Save</button>
+    </form>
+
+    <script>
+
+        function save(event) {
+
+           
+
+            const feedback = {
+                comment: document.getElementById('msg').value,
+                rating: document.querySelector('input[name="mood"]:checked') ? document.querySelector('input[name="mood"]:checked').value : null,
+                email: document.getElementById('email').value
+            };
+
+            // API call to save feedback
+            fetch('http://localhost:8080/api/feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(feedback)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Add any additional logic for successful submission
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Add any additional logic for error handling
+            });
+        }
+    </script>
+</body>
+</html>

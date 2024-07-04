@@ -1,0 +1,13 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          my-client:
+            client-id: bnzAndAccenture
+            client-secret: bnz@123!
+            scope: bnz
+            provider: bnz
+        provider:
+          my-client:
+            token-uri: http://localhost:8080/oauth/token
